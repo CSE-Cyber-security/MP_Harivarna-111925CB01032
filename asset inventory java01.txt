@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    static class Asset {
+        int id;
+        String name;
+        String type;
+        String status;
+
+        Asset(int id, String name, String type, String status) {
+            this.id = id;
+            this.name = name;
+            this.type = type;
+            this.status = status;
+        }
+
+        void display() {
+            System.out.println("ID: " + id);
+            System.out.println("Name: " + name);
+            System.out.println("Type: " + type);
+            System.out.println("Status: " + status);
+            System.out.println("----------------------");
+        }
+    }
+
+    static ArrayList<Asset> assets = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
+
+    static void addAsset() {
+        System.out.print("Enter Asset ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter Asset Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Asset Type: ");
+        String type = scanner.nextLine();
+
+        System.out.print("Enter Asset Status: ");
+        String status = scanner.nextLine();
+
+        assets.add(new Asset(id, name, type, status));
+
+        System.out.println("Asset added successfully!");
+    }
+
+    static void viewAssets() {
+        if (assets.isEmpty()) {
+            System.out.println("No assets found.");
+            return;
+        }
+
+        System.out.println("\n===== ASSET LIST =====");
+
+        for (Asset asset : assets) {
+            asset.display();
+        }
+    }
+
+    static void searchAsset() {
+        System.out.print("Enter Asset ID: ");
+        int id = scanner.nextInt();
+
+        for (Asset asset : assets) {
+            if (asset.id == id) {
+                System.out.println("\nAsset Found:");
+                asset.display();
+                return;
+            }
+        }
+
+        System.out.println("Asset not found.");
+    }
+
+    static void deleteAsset() {
+        System.out.print("Enter Asset ID to delete: ");
+        int id = scanner.nextInt();
+
+        for (int i = 0; i < assets.size(); i++) {
+            if (assets.get(i).id == id) {
+                assets.remove(i);
+                System.out.println("Asset deleted successfully!");
+                return;
+            }
+        }
+
+        System.out.println("Asset not found.");
+    }
+
+    public static void main(String[] args) {
+
+        while (true) {
+            System.out.println("\n============================");
+            System.out.println("     ASSET INVENTORY");
+            System.out.println("============================");
+            System.out.println("1. Add Asset");
+            System.out.println("2. View Assets");
+            System.out.println("3. Search Asset");
+            System.out.println("4. Delete Asset");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addAsset();
+                    break;
+
+                case 2:
+                    viewAssets();
+                    break;
+
+                case 3:
+                    searchAsset();
+                    break;
+
+                case 4:
+                    deleteAsset();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you!");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+}
